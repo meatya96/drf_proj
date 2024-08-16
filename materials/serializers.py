@@ -5,6 +5,10 @@ from materials.models import Course, Lesson
 
 
 class CourseSerializer(ModelSerializer):
+    lessons = SerializerMethodField()
+
+    def ger_lessons(self, course):
+        return [lesson.name for lesson in Lesson.objects.filter(course=course)]
     class Meta:
         model = Course
         fields = "__all__"
@@ -14,7 +18,7 @@ class CourseDetailSerializer(ModelSerializer):
     amount_of_lessons_in_course = SerializerMethodField()
 
     def get_amount_of_lessons_in_course(self, lesson):
-        return Lesson.objects.filter(course=lesson.course)
+        return Lesson.objects.filter.count(course=lesson.course)
 
     class Meta:
         model = Lesson
